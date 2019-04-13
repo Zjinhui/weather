@@ -15,7 +15,7 @@ public class WeatherOpenHelper extends SQLiteOpenHelper {
      */
     public static final String CREATE_CITY = "create table City(id integer primary key autoincrement,city_name text,city_code text)";
 
-    public static final String CREATE_COUNTY= "create table City(id integer primary key autoincrement,county_name text,county_code text,city_id integer)";
+    public static final String CREATE_COUNTY = "create table County(id integer primary key autoincrement,county_name text,county_code text,city_id integer)";
 
     public WeatherOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -32,5 +32,9 @@ public class WeatherOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+//        db.execSQL("drop table if exists City");
+//        db.execSQL("drop table if exists Province");
+//        db.execSQL("drop table if exists County");
+//        onCreate(db);
     }
 }

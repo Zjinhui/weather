@@ -36,7 +36,6 @@ public class WeatherDB {
     public synchronized static WeatherDB getInstance(Context context){
         if(weatherDB == null){
             weatherDB = new WeatherDB(context);
-
         }
         return weatherDB;
     }
@@ -55,7 +54,7 @@ public class WeatherDB {
     /**
      * 从数据库读取全国所有的省份信息
      */
-    public List<Province> loadProvince(){
+    public List<Province> loadProvinces(){
         List<Province> list = new ArrayList<Province>();
         Cursor cursor = db.query("Province",null,null,null,null,null,null
         );
