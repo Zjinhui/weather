@@ -13,7 +13,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/ic_launcher"/>
+            android:background="@drawable/ic_first_page_black_24dp"/>
 
         <TextView
             android:id="@+id/city_name"
@@ -29,7 +29,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:background="@mipmap/ic_launcher"/>
+            android:background="@drawable/ic_refresh_black_24dp"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
