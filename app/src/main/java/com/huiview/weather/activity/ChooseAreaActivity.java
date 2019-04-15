@@ -2,7 +2,10 @@ package com.huiview.weather.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -68,6 +71,13 @@ public class ChooseAreaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("city_selected",false)){
+            Intent intent = new Intent(this,WeatherActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
         listView = findViewById(R.id.list_view);
@@ -84,6 +94,12 @@ public class ChooseAreaActivity extends Activity {
                 }else if(currentLevel == LEVEL_CITY){
                     selectedCity = cityList.get(position);
                     queryCounties();
+                }else if (currentLevel==LEVEL_COUNTY){
+                    String countyCode = countyList.get(position).getCountyCode();
+                    Intent intent = new Intent(ChooseAreaActivity.this,WeatherActivity.class);
+                    intent.putExtra("county_code",countyCode);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });
@@ -104,7 +120,6 @@ public class ChooseAreaActivity extends Activity {
             listView.setSelection(0);
             titleText.setText("中国");
             currentLevel = LEVEL_PROVINCE;
-            
         }else{
             queryFromSever(null,"province");
         }
@@ -159,7 +174,7 @@ public class ChooseAreaActivity extends Activity {
         if(!TextUtils.isEmpty(code)){
             address = "http://www.weather.com.cn/data/list3/city" + code +".xml";
         }else{
-            address = "http:www.weather.com.cn/data/list3/city.xml";
+            address = "http://www.weather.com.cn/data/list3/city.xml";
         }
         showProgressDialog();
         HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
@@ -208,7 +223,7 @@ public class ChooseAreaActivity extends Activity {
     /**
      * 显示进度对话框
      */
-    private void closeProgressDialog() {
+    private void showProgressDialog() {
         if(progressDialog == null){
             progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("正在加载...");
@@ -220,7 +235,7 @@ public class ChooseAreaActivity extends Activity {
     /**
      * 关闭进度对话框
      */
-    private void showProgressDialog() {
+    private void closeProgressDialog() {
         if (progressDialog != null){
             progressDialog.dismiss();
         }

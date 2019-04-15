@@ -21,7 +21,7 @@ public class WeatherDB {
     /**
      * 数据库版本
      */
-    public  static final int VERSION = 1;
+    public  static final int VERSION = 2;
     private static WeatherDB weatherDB;
     private SQLiteDatabase db;
 
@@ -92,11 +92,11 @@ public class WeatherDB {
         if(cursor.moveToFirst()){
             do{
                 City city = new City();
-                city.setId(cursor.getInt(cursor.getColumnIndex("city_name")));
+                city.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
                 city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
+                city.setProvinceId(provinceId);
                 list.add(city);
-
             }while (cursor.moveToNext());
         }
         return list;
